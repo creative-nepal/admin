@@ -8,8 +8,9 @@ import { DataTable } from "@/components/composed/data-table";
 import { PageHeader } from "@/components/composed/page-header";
 import { SelectFilter } from "@/components/composed/select-filter";
 import { Button } from "@/components/ui/button";
-import { type Sector, sectorOptions } from "@/features/businesses/types";
+import type { Sector } from "@/features/businesses/types";
 import { useTranslation } from "@/features/i18n/hooks/use-translation";
+import { useSectorOptions } from "@/features/sectors/hooks/use-sectors";
 import { planColumns } from "../components/plan-columns";
 import { PlanFormSheet } from "../components/plan-form-sheet";
 import { plansQueryOptions } from "../queries";
@@ -17,6 +18,7 @@ import { plansSearchParams } from "../search-params";
 
 export function PlansView() {
   const { t } = useTranslation();
+  const sectorOptions = useSectorOptions();
   const plansColumns = useMemo(() => planColumns(t), [t]);
 
   const [params, setParams] = useQueryStates(plansSearchParams);
@@ -87,7 +89,7 @@ export function PlansView() {
             onValueChange={(value) =>
               setParams({ sector: value as Sector | null, pageIndex: 0 })
             }
-            options={sectorOptions(t)}
+            options={sectorOptions}
             allLabel={t("ui.admin.businesses.allSectors")}
           />
         )}

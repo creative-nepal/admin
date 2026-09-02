@@ -67,3 +67,14 @@ bun run dev              # port 3001; needs creative-nepal-api on NEXT_PUBLIC_AP
 ```
 
 bun only — no npm/yarn/pnpm; generators via `bunx`.
+
+## The sector list is server-driven
+
+Sectors come from `GET /api/v1/platform/sectors` via `features/sectors/` — `useSectorOptions()`
+for a filter or select, `useSectorLabel()` for a badge. There is no local sector enum or label
+map: a clone enables its own sectors with `SECTORS_ENABLED`, so a hardcoded list offers options
+its own API will reject, and a hardcoded `SECTOR_LABELS` map bypasses i18n entirely (which is
+what it used to do). Plan feature-flag fields come from the same response's `planFeatureKeys`.
+
+`PlanInput.sector` is typed `string` for the same reason — the API validates it against the
+sectors that deployment actually enables.

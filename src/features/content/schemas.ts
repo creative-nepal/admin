@@ -105,12 +105,23 @@ const ctaSchema = z.object({
   buttonHref: href,
 });
 
+const pricingSchema = z.object({
+  id: z.string(),
+  type: z.literal("pricing"),
+  heading: optionalShortText,
+  subheading: optionalLongText,
+  sector: z.string().trim().max(32),
+  ctaLabel: optionalShortText,
+  ctaHref: optionalHref,
+});
+
 export const blockFormSchema = z.discriminatedUnion("type", [
   heroSchema,
   featuresSchema,
   richTextSchema,
   faqSchema,
   ctaSchema,
+  pricingSchema,
 ]);
 
 export type BlockFormValues = z.infer<typeof blockFormSchema>;
@@ -269,6 +280,16 @@ export function toBlockFormValues(block: ContentBlock): BlockFormValues {
         body: block.body ?? "",
         buttonLabel: block.buttonLabel,
         buttonHref: block.buttonHref,
+      };
+    case "pricing":
+      return {
+        id: block.id,
+        type: "pricing",
+        heading: block.heading ?? "",
+        subheading: block.subheading ?? "",
+        sector: block.sector ?? "",
+        ctaLabel: block.ctaLabel ?? "",
+        ctaHref: block.ctaHref ?? "",
       };
   }
 }

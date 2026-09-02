@@ -13,6 +13,7 @@ import { PageHeader } from "@/components/composed/page-header";
 import { SearchInput } from "@/components/composed/search-input";
 import { SelectFilter } from "@/components/composed/select-filter";
 import { useTranslation } from "@/features/i18n/hooks/use-translation";
+import { useSectorOptions } from "@/features/sectors/hooks/use-sectors";
 import { businessColumns } from "../components/business-columns";
 import { businessesQueryOptions } from "../queries";
 import { businessesSearchParams } from "../search-params";
@@ -20,11 +21,11 @@ import {
   type BusinessStatus,
   businessStatusOptions,
   type Sector,
-  sectorOptions,
 } from "../types";
 
 export function BusinessesView() {
   const { t } = useTranslation();
+  const sectorOptions = useSectorOptions();
   const businessesColumns = useMemo(() => businessColumns(t), [t]);
 
   const [params, setParams] = useQueryStates(businessesSearchParams);
@@ -108,7 +109,7 @@ export function BusinessesView() {
               onValueChange={(value) =>
                 setParams({ sector: value as Sector | null, pageIndex: 0 })
               }
-              options={sectorOptions(t)}
+              options={sectorOptions}
               allLabel={t("ui.admin.businesses.allSectors")}
             />
             <SelectFilter

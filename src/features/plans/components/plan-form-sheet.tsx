@@ -14,8 +14,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { sectorOptions } from "@/features/businesses/types";
 import { useTranslation } from "@/features/i18n/hooks/use-translation";
+import { useSectorOptions } from "@/features/sectors/hooks/use-sectors";
 import { useCreatePlan, useUpdatePlan } from "../mutations";
 import { type PlanFormValues, planFormSchema } from "../schemas";
 import { billingCycleOptions, type Plan } from "../types";
@@ -32,6 +32,7 @@ export function PlanFormSheet({
   plan,
 }: PlanFormSheetProps) {
   const { t } = useTranslation();
+  const sectorOptions = useSectorOptions();
 
   const createPlan = useCreatePlan();
   const updatePlan = useUpdatePlan();
@@ -103,7 +104,7 @@ export function PlanFormSheet({
               <SelectField
                 name="sector"
                 label={t("ui.field.sector")}
-                options={sectorOptions(t)}
+                options={sectorOptions}
               />
               <TextField
                 name="key"

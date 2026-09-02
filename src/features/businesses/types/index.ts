@@ -1,6 +1,6 @@
 import type { Translate } from "@/features/i18n/types";
 
-export type Sector = "mart" | "medical" | "restaurant";
+export type Sector = "mart" | "medical" | "restaurant" | "services";
 export type BusinessStatus = "active" | "suspended" | "closed";
 export type SubscriptionStatus =
   | "trialing"
@@ -8,16 +8,7 @@ export type SubscriptionStatus =
   | "past_due"
   | "canceled";
 
-export const SECTORS: Sector[] = ["mart", "medical", "restaurant"];
-
-export function sectorOptions(
-  t: Translate,
-): { value: Sector; label: string }[] {
-  return SECTORS.map((value) => ({
-    value,
-    label: t(`common.sector.${value}`),
-  }));
-}
+export const SECTORS: Sector[] = ["mart", "medical", "restaurant", "services"];
 
 export const BUSINESS_STATUSES: BusinessStatus[] = [
   "active",
@@ -74,4 +65,15 @@ export interface AuditLogEntry {
   createdAt: string;
   invoiceNumber: number;
   fiscalYear: string;
+}
+
+export interface Branch {
+  id: string;
+  businessId: string;
+  name: string;
+  code: string | null;
+  address: string | null;
+  isDefault: boolean;
+  isActive: boolean;
+  createdAt: string;
 }

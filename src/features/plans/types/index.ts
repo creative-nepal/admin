@@ -35,7 +35,7 @@ export interface Plan {
 }
 
 export interface PlanInput {
-  sector: Sector;
+  sector: string;
   key: string;
   name: string;
   priceCents: number;

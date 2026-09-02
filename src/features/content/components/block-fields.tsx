@@ -2,10 +2,12 @@
 
 import { RiAddLine, RiDeleteBin6Line } from "@remixicon/react";
 import { useFieldArray, useFormContext } from "@/components/form/form";
+import { SelectField } from "@/components/form/select-field";
 import { TextField } from "@/components/form/text-field";
 import { TextareaField } from "@/components/form/textarea-field";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/features/i18n/hooks/use-translation";
+import { useSectorOptions } from "@/features/sectors/hooks/use-sectors";
 import type { TranslationFormValues } from "../schemas";
 import type { ContentBlockType } from "../types";
 
@@ -141,6 +143,7 @@ export function BlockFields({
   type: ContentBlockType;
 }) {
   const { t } = useTranslation();
+  const sectorOptions = useSectorOptions();
 
   switch (type) {
     case "hero":
@@ -242,6 +245,37 @@ export function BlockFields({
             />
             <TextField
               name={`blocks.${index}.buttonHref`}
+              label={t("ui.admin.content.buttonLink")}
+              placeholder="/register"
+            />
+          </div>
+        </>
+      );
+    case "pricing":
+      return (
+        <>
+          <TextField
+            name={`blocks.${index}.heading`}
+            label={t("ui.admin.content.heading")}
+          />
+          <TextareaField
+            name={`blocks.${index}.subheading`}
+            label={t("ui.admin.content.subheading")}
+            rows={2}
+          />
+          <SelectField
+            name={`blocks.${index}.sector`}
+            label={t("ui.field.sector")}
+            description={t("ui.admin.content.pricingSectorHint")}
+            options={sectorOptions}
+          />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <TextField
+              name={`blocks.${index}.ctaLabel`}
+              label={t("ui.admin.content.buttonLabel")}
+            />
+            <TextField
+              name={`blocks.${index}.ctaHref`}
               label={t("ui.admin.content.buttonLink")}
               placeholder="/register"
             />

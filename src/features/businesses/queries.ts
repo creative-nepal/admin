@@ -3,6 +3,7 @@ import {
   getBusiness,
   type ListBusinessesParams,
   listAuditLog,
+  listBusinessBranches,
   listBusinesses,
   listSubscriptions,
 } from "./services";
@@ -15,6 +16,8 @@ export const businessesQueryKeys = {
     [...businessesQueryKeys.all, "detail", businessId] as const,
   subscriptions: (businessId: string) =>
     [...businessesQueryKeys.all, "subscriptions", businessId] as const,
+  branches: (businessId: string) =>
+    [...businessesQueryKeys.all, "branches", businessId] as const,
   auditLog: (businessId: string, pageIndex: number, pageSize: number) =>
     [
       ...businessesQueryKeys.all,
@@ -56,5 +59,13 @@ export function businessAuditLogQueryOptions(
     queryKey: businessesQueryKeys.auditLog(businessId, pageIndex, pageSize),
     queryFn: () => listAuditLog(businessId, pageIndex, pageSize),
     placeholderData: (previous) => previous,
+  });
+}
+
+export function businessBranchesQueryOptions(businessId: string) {
+  return queryOptions({
+    queryKey: businessesQueryKeys.branches(businessId),
+    queryFn: () => listBusinessBranches(businessId),
+    enabled: Boolean(businessId),
   });
 }

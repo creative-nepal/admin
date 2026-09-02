@@ -2,6 +2,7 @@ import { api } from "@/lib/api";
 import type { PaginatedResult } from "@/types/api";
 import type {
   AuditLogEntry,
+  Branch,
   Business,
   BusinessStatus,
   Sector,
@@ -112,6 +113,16 @@ export async function listAuditLog(
   const { data } = await api.get<PaginatedResult<AuditLogEntry>>(
     `/api/v1/platform/businesses/${businessId}/audit-log`,
     { params: { limit: pageSize, offset: pageIndex * pageSize } },
+  );
+  return data;
+}
+
+export async function listBusinessBranches(
+  businessId: string,
+): Promise<PaginatedResult<Branch>> {
+  const { data } = await api.get<PaginatedResult<Branch>>(
+    `/api/v1/businesses/${businessId}/branches`,
+    { params: { limit: 100 } },
   );
   return data;
 }

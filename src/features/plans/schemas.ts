@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const planFormSchema = z.object({
-  sector: z.enum(["mart", "medical", "restaurant"]),
+  sector: z.string().min(1, "Required"),
   key: z
     .string()
     .min(1, "Required")

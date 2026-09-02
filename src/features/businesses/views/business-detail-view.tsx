@@ -21,6 +21,7 @@ import {
   BusinessStatusBadge,
   SectorBadge,
 } from "../components/business-badges";
+import { BusinessBranchesCard } from "../components/business-branches-card";
 import { BusinessSubscriptionCard } from "../components/business-subscription-card";
 import { useSetBusinessCompliance } from "../mutations";
 import { businessQueryOptions } from "../queries";
@@ -72,6 +73,9 @@ export function BusinessDetailView({ businessId }: { businessId: string }) {
         <TabsList>
           <TabsTrigger value="details">
             {t("ui.admin.businesses.detailsTab")}
+          </TabsTrigger>
+          <TabsTrigger value="branches">
+            {t("ui.admin.businesses.branchesTab")}
           </TabsTrigger>
           <TabsTrigger value="audit">
             {t("ui.admin.businesses.auditTab")}
@@ -175,6 +179,10 @@ export function BusinessDetailView({ businessId }: { businessId: string }) {
           </Card>
 
           <BusinessSubscriptionCard business={business} />
+        </TabsContent>
+
+        <TabsContent value="branches" className="pt-4">
+          <BusinessBranchesCard businessId={business.id} />
         </TabsContent>
 
         <TabsContent value="audit" className="pt-4">

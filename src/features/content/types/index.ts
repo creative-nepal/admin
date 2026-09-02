@@ -26,7 +26,13 @@ export function pageStatusOptions(
   }));
 }
 
-export type ContentBlockType = "hero" | "features" | "richText" | "faq" | "cta";
+export type ContentBlockType =
+  | "hero"
+  | "features"
+  | "richText"
+  | "faq"
+  | "cta"
+  | "pricing";
 
 export const BLOCK_TYPES: ContentBlockType[] = [
   "hero",
@@ -34,6 +40,7 @@ export const BLOCK_TYPES: ContentBlockType[] = [
   "richText",
   "faq",
   "cta",
+  "pricing",
 ];
 
 export function blockTypeOptions(
@@ -89,12 +96,23 @@ export interface CtaBlock {
   buttonHref: string;
 }
 
+export interface PricingBlock {
+  id: string;
+  type: "pricing";
+  heading?: string;
+  subheading?: string;
+  sector?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
 export type ContentBlock =
   | HeroBlock
   | FeaturesBlock
   | RichTextBlock
   | FaqBlock
-  | CtaBlock;
+  | CtaBlock
+  | PricingBlock;
 
 export interface ContentSeo {
   title?: string;
@@ -174,6 +192,14 @@ export function createBlock(type: ContentBlockType): ContentBlock {
         heading: "Ready to start?",
         buttonLabel: "Get started",
         buttonHref: "/register",
+      };
+    case "pricing":
+      return {
+        id: newId("pricing"),
+        type,
+        heading: "Plans",
+        ctaLabel: "Start free",
+        ctaHref: "/register",
       };
   }
 }

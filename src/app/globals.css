@@ -1,5 +1,2 @@
 @import "../styles/globals.css";
-
-html {
-  font-size: 125%;
-}
+@import "../styles/brand.css";

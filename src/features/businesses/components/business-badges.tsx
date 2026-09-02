@@ -2,11 +2,13 @@
 
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "@/features/i18n/hooks/use-translation";
-import { SECTOR_LABELS } from "../constants";
+import { useSectorLabel } from "@/features/sectors/hooks/use-sectors";
 import type { BusinessStatus, Sector, SubscriptionStatus } from "../types";
 
 export function SectorBadge({ sector }: { sector: Sector }) {
-  return <Badge variant="secondary">{SECTOR_LABELS[sector] ?? sector}</Badge>;
+  const sectorLabel = useSectorLabel();
+
+  return <Badge variant="secondary">{sectorLabel(sector)}</Badge>;
 }
 
 export function BusinessStatusBadge({ status }: { status: BusinessStatus }) {
