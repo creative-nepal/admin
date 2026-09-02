@@ -10,6 +10,7 @@ import { useTranslation } from "@/features/i18n/hooks/use-translation";
 import { useSectorOptions } from "@/features/sectors/hooks/use-sectors";
 import type { TranslationFormValues } from "../schemas";
 import type { ContentBlockType } from "../types";
+import { ImageField } from "./image-field";
 
 type ItemsPath = `blocks.${number}.items`;
 
@@ -178,7 +179,7 @@ export function BlockFields({
               placeholder="/pricing"
             />
           </div>
-          <TextField
+          <ImageField
             name={`blocks.${index}.imageUrl`}
             label={t("ui.admin.content.imageUrl")}
             description={t("ui.admin.content.imageUrlHint")}
