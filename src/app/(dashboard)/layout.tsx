@@ -6,6 +6,7 @@ import {
   RiBuildingLine,
   RiFileTextLine,
   RiPriceTag3Line,
+  RiPulseLine,
   RiShieldStarLine,
   RiUserLine,
 } from "@remixicon/react";
@@ -55,6 +56,11 @@ export default function DashboardLayout({
       icon: <RiBillLine />,
     },
     { title: t("ui.admin.nav.users"), href: "/users", icon: <RiUserLine /> },
+    {
+      title: t("ui.admin.nav.operations"),
+      href: "/operations",
+      icon: <RiPulseLine />,
+    },
   ];
   const open = useSidebarStore((state) => state.open);
   const setOpen = useSidebarStore((state) => state.setOpen);
