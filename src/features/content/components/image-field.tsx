@@ -29,7 +29,6 @@ export function ImageField({
       <TextField name={name} label={label} description={description} />
       <FileUpload
         label={t("ui.admin.content.uploadImage")}
-        replaceLabel={t("ui.admin.content.replaceImage")}
         clearLabel={t("ui.action.cancel")}
         value={current ? { id: current, url: current } : null}
         onChange={(next) =>
