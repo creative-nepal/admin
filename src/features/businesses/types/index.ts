@@ -33,6 +33,13 @@ export interface Business {
   panNumber: string | null;
   vatRegistered: boolean;
   cbmsRequired: boolean;
+  theme: {
+    primary?: string;
+    primaryForeground?: string;
+    radius?: string;
+    logoUrl?: string;
+    defaultMode?: "light" | "dark" | "system";
+  };
   serviceChargePercent: number;
   maxDiscountPercent: number;
   fiscalYearStartMonth: number;

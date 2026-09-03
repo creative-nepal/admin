@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "@/features/i18n/hooks/use-translation";
 import { sectorsQueryOptions } from "../queries";
-import type { SectorDescriptor } from "../types";
+import type { SectorDescriptor, SectorTheme } from "../types";
 
 export function useSectors(): {
   sectors: SectorDescriptor[];
@@ -31,4 +31,11 @@ export function useSectorLabel(): (sector: string) => string {
     const found = sectors.find((entry) => entry.key === sector);
     return found ? t(found.nameKey) : sector;
   };
+}
+
+export function useSectorTheme(): (sector: string) => SectorTheme | undefined {
+  const { sectors } = useSectors();
+
+  return (sector: string) =>
+    sectors.find((entry) => entry.key === sector)?.theme;
 }

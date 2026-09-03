@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslation } from "@/features/i18n/hooks/use-translation";
+import { useSectorTheme } from "@/features/sectors/hooks/use-sectors";
 import { formatDate } from "@/lib/formatters";
 import { BusinessAuditLog } from "../components/business-audit-log";
 import {
@@ -32,6 +33,7 @@ export function BusinessDetailView({ businessId }: { businessId: string }) {
   const { data: business, isPending } = useQuery(
     businessQueryOptions(businessId),
   );
+  const sectorTheme = useSectorTheme();
   const setCompliance = useSetBusinessCompliance();
 
   if (isPending || !business) {
@@ -44,6 +46,9 @@ export function BusinessDetailView({ businessId }: { businessId: string }) {
       </div>
     );
   }
+
+  const brandColour =
+    business.theme?.primary ?? sectorTheme(business.sector)?.primary;
 
   function handleComplianceChange(
     patch: { cbmsRequired?: boolean } | { vatRegistered?: boolean },
@@ -104,6 +109,22 @@ export function BusinessDetailView({ businessId }: { businessId: string }) {
                   </dt>
                   <dd className="font-medium">
                     BS month {business.fiscalYearStartMonth}
+                  </dd>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <dt className="text-muted-foreground text-sm">
+                    {t("ui.admin.businesses.brandColour")}
+                  </dt>
+                  <dd className="flex items-center gap-2">
+                    <span
+                      className="size-4 rounded-full border"
+                      style={{ background: brandColour }}
+                    />
+                    <span className="text-xs">
+                      {business.theme?.primary
+                        ? t("ui.admin.businesses.customised")
+                        : t("ui.admin.businesses.sectorDefault")}
+                    </span>
                   </dd>
                 </div>
                 <div className="flex flex-col gap-1">
