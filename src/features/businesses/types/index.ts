@@ -33,6 +33,8 @@ export interface Business {
   panNumber: string | null;
   vatRegistered: boolean;
   cbmsRequired: boolean;
+  serviceChargePercent: number;
+  maxDiscountPercent: number;
   fiscalYearStartMonth: number;
   status: BusinessStatus;
   createdAt: string;

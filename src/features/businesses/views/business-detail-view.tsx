@@ -108,6 +108,24 @@ export function BusinessDetailView({ businessId }: { businessId: string }) {
                 </div>
                 <div className="flex flex-col gap-1">
                   <dt className="text-muted-foreground text-sm">
+                    {t("ui.admin.businesses.serviceCharge")}
+                  </dt>
+                  <dd className="font-medium tabular-nums">
+                    {business.serviceChargePercent}%
+                  </dd>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <dt className="text-muted-foreground text-sm">
+                    {t("ui.admin.businesses.maxDiscount")}
+                  </dt>
+                  <dd className="font-medium tabular-nums">
+                    {business.maxDiscountPercent > 0
+                      ? `${business.maxDiscountPercent}%`
+                      : t("ui.admin.businesses.discountsOff")}
+                  </dd>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <dt className="text-muted-foreground text-sm">
                     {t("ui.admin.businesses.organization")}
                   </dt>
                   <dd className="font-mono text-xs">
