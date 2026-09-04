@@ -6,11 +6,6 @@ import { TextField } from "@/components/form/text-field";
 import { uploadPlatformFile } from "@/features/files/services";
 import { useTranslation } from "@/features/i18n/hooks/use-translation";
 
-/**
- * An image URL that an author can either paste or upload. Upload writes the
- * public file URL into the same field, so the stored block shape is unchanged
- * and existing pasted URLs keep working.
- */
 export function ImageField({
   name,
   label,

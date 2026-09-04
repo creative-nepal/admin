@@ -1,11 +1,6 @@
 import { api } from "@/lib/api";
 import type { FilePurpose, StoredFile, UploadTicket } from "./types";
 
-/**
- * Public URL for an image the marketing site renders anonymously. The API
- * redirects to a signed object-storage URL, so this stays stable while the
- * signature behind it rotates.
- */
 export function publicFileUrl(fileId: string): string {
   const base = process.env.NEXT_PUBLIC_API_URL ?? "";
   return `${base}/api/v1/public/files/${fileId}`;
