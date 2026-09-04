@@ -110,3 +110,136 @@ export function shiftBsMonth(
 
   return { year: Math.floor(index / 12), month: (index % 12) + 1 };
 }
+
+const DEVANAGARI = ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"];
+
+export function toDevanagari(value: number | string): string {
+  return String(value).replace(/[0-9]/g, (digit) => DEVANAGARI[Number(digit)]);
+}
+
+export const BS_WEEKDAYS_NE = [
+  "आइतवार",
+  "सोमवार",
+  "मंगलवार",
+  "बुधवार",
+  "बिहिवार",
+  "शुक्रवार",
+  "शनिवार",
+] as const;
+
+export const BS_WEEKDAYS_EN = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+] as const;
+
+export interface GridCell {
+  bsYear: number;
+  bsMonth: number;
+  bsDay: number;
+  ad: string;
+  adDay: number;
+  weekday: number;
+  inMonth: boolean;
+  isToday: boolean;
+  isSaturday: boolean;
+  isSunday: boolean;
+}
+
+function adKey(instant: Date): string {
+  const shifted = new Date(
+    instant.getTime() + NEPAL_UTC_OFFSET_MINUTES * 60_000,
+  );
+
+  return shifted.toISOString().slice(0, 10);
+}
+
+function cellFor(
+  year: number,
+  month: number,
+  day: number,
+  inMonth: boolean,
+  todayKey: string,
+): GridCell {
+  const start = fromBs(year, month, day);
+  const noon = new Date(start.getTime() + 12 * 3_600_000);
+  const key = adKey(start);
+  const weekday = noon.getUTCDay();
+
+  return {
+    bsYear: year,
+    bsMonth: month,
+    bsDay: day,
+    ad: key,
+    adDay: Number(key.slice(8, 10)),
+    weekday,
+    inMonth,
+    isToday: key === todayKey,
+    isSaturday: weekday === 6,
+    isSunday: weekday === 0,
+  };
+}
+
+export function bsMonthGrid(year: number, month: number): GridCell[][] {
+  const days = bsMonthLength(year, month);
+  const todayKey = adKey(new Date());
+
+  const current = Array.from({ length: days }, (_, index) =>
+    cellFor(year, month, index + 1, true, todayKey),
+  );
+
+  const leading = current[0].weekday;
+  const previous = shiftBsMonth(year, month, -1);
+  const previousLength = bsMonthLength(previous.year, previous.month);
+
+  const before = Array.from({ length: leading }, (_, index) =>
+    cellFor(
+      previous.year,
+      previous.month,
+      previousLength - leading + index + 1,
+      false,
+      todayKey,
+    ),
+  );
+
+  const next = shiftBsMonth(year, month, 1);
+  const trailing = (7 - ((before.length + current.length) % 7)) % 7;
+
+  const after = Array.from({ length: trailing }, (_, index) =>
+    cellFor(next.year, next.month, index + 1, false, todayKey),
+  );
+
+  const all = [...before, ...current, ...after];
+  const weeks: GridCell[][] = [];
+
+  for (let index = 0; index < all.length; index += 7) {
+    weeks.push(all.slice(index, index + 7));
+  }
+
+  return weeks;
+}
+
+export function currentBsMonth(): { year: number; month: number } {
+  const now = toBs(new Date());
+
+  return { year: now.year, month: now.month };
+}
+
+export const BS_MONTH_NAMES_NE = [
+  "बैशाख",
+  "जेठ",
+  "असार",
+  "साउन",
+  "भदौ",
+  "असोज",
+  "कार्तिक",
+  "मंसिर",
+  "पुष",
+  "माघ",
+  "फागुन",
+  "चैत",
+] as const;
