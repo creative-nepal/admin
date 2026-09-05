@@ -121,7 +121,7 @@ export async function listBusinessBranches(
   businessId: string,
 ): Promise<PaginatedResult<Branch>> {
   const { data } = await api.get<PaginatedResult<Branch>>(
-    `/api/v1/businesses/${businessId}/branches`,
+    `/api/v1/platform/businesses/${businessId}/branches`,
     { params: { limit: 100 } },
   );
   return data;
